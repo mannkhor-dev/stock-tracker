@@ -1,114 +1,36 @@
-# Stock Ticker Tracker
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A modern web application for tracking Australian and international stock tickers with real-time data, performance metrics, and direct links to Australian brokerages.
+## Getting Started
 
-## Features
+First, run the development server:
 
-- Add and track your favorite stock tickers (e.g., $URG)
-- Dashboard view with all tickers and performance metrics (1d, 7d, 30d)
-- Detailed ticker pages with interactive price charts
-- Mini sparkline charts on dashboard
-- Direct buy links to cheapest Australian brokers (MooMoo, CMC Markets, Superhero, etc.)
-- Real-time stock data via Finnhub API
-
-## Tech Stack
-
-- **Frontend**: Next.js 14+ with TypeScript, Tailwind CSS
-- **Database**: SQLite (dev) / PostgreSQL (production)
-- **ORM**: Prisma
-- **Charts**: Recharts
-- **Stock API**: Finnhub (free tier)
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 18+ and npm
-- Finnhub API key (free at https://finnhub.io/)
-
-### Installation
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Set up environment variables:
-```bash
-cp .env.example .env.local
-```
-
-Edit `.env.local` and add your Finnhub API key:
-```env
-DATABASE_URL="file:./dev.db"
-FINNHUB_API_KEY="your_api_key_here"
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
-
-3. Initialize database:
-```bash
-npx prisma generate
-npx prisma migrate dev --name init
-```
-
-4. Run development server:
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-5. Open http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Project Structure
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```
-stock-tracker/
-├── app/                    # Next.js app directory
-│   ├── api/               # API routes
-│   ├── dashboard/         # Dashboard page
-│   └── ticker/            # Ticker detail pages
-├── components/            # React components
-├── lib/                   # Utilities and API clients
-├── prisma/               # Database schema
-└── public/               # Static assets
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Development Roadmap
+## Learn More
 
-See [PROJECT_PLAN.md](./PROJECT_PLAN.md) for the complete implementation plan.
+To learn more about Next.js, take a look at the following resources:
 
-### Phase 1: MVP (Week 1-2)
-- [ ] Project setup
-- [ ] Basic ticker management
-- [ ] Dashboard with mini charts
-- [ ] Stock data integration
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Phase 2: Enhanced Features (Week 3)
-- [ ] Detailed ticker pages
-- [ ] Full interactive charts
-- [ ] Broker integration
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-### Phase 3: Polish (Week 4)
-- [ ] Responsive design
-- [ ] Performance optimization
-- [ ] Dark mode
+## Deploy on Vercel
 
-## API Rate Limits
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Finnhub free tier: 60 calls/minute
-
-Caching strategy:
-- Real-time quotes: 5 minutes
-- Historical data: 1 hour
-- Company info: 24 hours
-
-## Australian Brokers Supported
-
-1. **MooMoo** - $0 commission
-2. **CMC Markets** - $0 for trades ≤$1,000
-3. **Superhero** - $2 per trade
-4. **SelfWealth** - $9.50 flat fee
-5. **Interactive Brokers** - Best for active traders
-
-## License
-
-MIT
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

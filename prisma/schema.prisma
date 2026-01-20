@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Ticker {
+  id            Int              @id @default(autoincrement())
+  symbol        String           @unique  // Full symbol with exchange (e.g., "CBA.AX", "AAPL")
+  displaySymbol String                    // User-friendly symbol (e.g., "CBA", "AAPL")
+  exchange      String                    // "ASX", "NYSE", "NASDAQ"
+  companyName   String?
+  addedAt       DateTime         @default(now())
+  notes         String?
+
+  snapshots     PriceSnapshot[]
+  cachedData    CachedStockData?
+
+  @@index([symbol])
+}
+
+model PriceSnapshot {
+  id            Int       @id @default(autoincrement())
+  tickerId      Int
+  price         Float
+  changePercent Float?
+  volume        Int?
+  timestamp     DateTime  @default(now())
+
+  ticker        Ticker    @relation(fields: [tickerId], references: [id], onDelete: Cascade)
+
+  @@index([tickerId, timestamp])
+}
+
+model CachedStockData {
+  id            Int       @id @default(autoincrement())
+  tickerId      Int       @unique
+
+  // Current quote data (refreshed manually)
+  currentPrice  Float?
+  openPrice     Float?
+  highPrice     Float?
+  lowPrice      Float?
+  previousClose Float?
+
+  // Company fundamentals (cached for 24 hours)
+  marketCap     Float?
+  peRatio       Float?
+  week52High    Float?
+  week52Low     Float?
+  sector        String?
+
+  // Chart data (1 year of daily prices) - stored as JSON string
+  chartData     String?
+
+  cachedAt      DateTime  @default(now())
+  expiresAt     DateTime
+
+  ticker        Ticker    @relation(fields: [tickerId], references: [id], onDelete: Cascade)
+
+  @@index([tickerId])
+}
+
+// Settings table for app preferences (dark mode, etc.)
+model AppSettings {
+  id            Int       @id @default(autoincrement())
+  key           String    @unique
+  value         String
+  updatedAt     DateTime  @updatedAt
+}
